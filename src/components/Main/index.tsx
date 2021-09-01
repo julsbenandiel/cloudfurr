@@ -2,26 +2,26 @@ import React, { FC } from 'react'
 import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import 'styles/index.scss';
+import { Navbar } from './Navbar';
+import { AppRouter } from 'components/Router';
+import { Folder, People, Settings, ShoppingBasket } from '@material-ui/icons';
+import { List } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((theme: Theme) => {
+  console.log({ theme })
+  return createStyles({
     root: {
       display: 'flex',
     },
@@ -81,59 +81,40 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(3),
     },
-  }),
-);
+  });
+});
 
 const Main:FC<any> = (props) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setIsOpen(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setIsOpen(false);
   };
 
   return (
-    <div className={classes.root}>
+    <div className={`${classes.root} dashboard`}>
       <CssBaseline />
-      <AppBar
-        color="secondary"
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Cloudfurr PH - Dashboard
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <Navbar
+        classes={ classes }
+        handleDrawerOpen={ handleDrawerOpen }
+        isOpen={ isOpen }
+      />
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
+          [classes.drawerOpen]: isOpen,
+          [classes.drawerClose]: !isOpen,
         })}
         classes={{
           paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
+            [classes.drawerOpen]: isOpen,
+            [classes.drawerClose]: !isOpen,
           }),
         }}
       >
@@ -145,31 +126,43 @@ const Main:FC<any> = (props) => {
         <Divider />
 
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+          <Link to="/records">
+            <ListItem button key="records-button">
+              <ListItemIcon><Folder /></ListItemIcon>
+              <ListItemText primary="Animal Records" />
             </ListItem>
-          ))}
+          </Link>
+
+          <Link to="/users">
+            <ListItem button key="users-button">
+              <ListItemIcon><People /></ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItem>
+          </Link>
+
+          <Link to="/shop">
+            <ListItem button key="shpopping-button">
+              <ListItemIcon><ShoppingBasket /></ListItemIcon>
+              <ListItemText primary="Cloudfurr Shop" />
+            </ListItem>
+          </Link>
+
         </List>
 
         <Divider />
 
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key="settings-button">
+            <ListItemIcon><Settings/></ListItemIcon>
+            <ListItemText primary="Settings" />
+          </ListItem>
         </List>
       </Drawer>
 
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography variant="h2">
-          hello world
-        </Typography>
+
+        <AppRouter />
         
       </main>
     </div>
