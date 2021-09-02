@@ -17,6 +17,7 @@ import { Folder, People, Settings, ShoppingBasket } from '@material-ui/icons';
 import { List } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -126,21 +127,21 @@ const Main:FC<any> = (props) => {
         <Divider />
 
         <List>
-          <Link to="/records">
+          <Link className="linkText" to="/records">
             <ListItem button key="records-button">
               <ListItemIcon><Folder /></ListItemIcon>
-              <ListItemText primary="Animal Records" />
+              <ListItemText  primary="Animal Records" />
             </ListItem>
           </Link>
 
-          <Link to="/users">
+          <Link className="linkText" to="/users">
             <ListItem button key="users-button">
               <ListItemIcon><People /></ListItemIcon>
               <ListItemText primary="Users" />
             </ListItem>
           </Link>
 
-          <Link to="/shop">
+          <Link className="linkText" to="/shop">
             <ListItem button key="shpopping-button">
               <ListItemIcon><ShoppingBasket /></ListItemIcon>
               <ListItemText primary="Cloudfurr Shop" />
@@ -152,11 +153,14 @@ const Main:FC<any> = (props) => {
         <Divider />
 
         <List>
+          <Link className="linkText" to="/settings">
           <ListItem button key="settings-button">
             <ListItemIcon><Settings/></ListItemIcon>
             <ListItemText primary="Settings" />
           </ListItem>
+          </Link>
         </List>
+          
       </Drawer>
 
       <main className={classes.content}>

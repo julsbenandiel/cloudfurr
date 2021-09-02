@@ -7,6 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { AccountCircle, Pets } from '@material-ui/icons';
 import { Theme } from '@material-ui/core';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 interface NavbarInterface {
   classes: any;
@@ -40,7 +41,9 @@ export const Navbar:FC<NavbarInterface> = (props) => {
         </IconButton>
         <Typography className="dashboard__title-container" variant="h6" noWrap>
           <Pets className="" />
+          <Link  className="dashboard__title-textLink" to="/">
           <span className="dashboard__title-text">Cloudfurr</span>
+          </Link>
         </Typography>
 
         <div>

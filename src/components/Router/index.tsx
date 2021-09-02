@@ -1,3 +1,5 @@
+
+import AnimalRecords from 'components/Main/Content/AnimalRecords';
 import React, { FC } from 'react';
 import {
   BrowserRouter as Router,
@@ -5,6 +7,11 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Cloudfurr from "components/Main/Content/Cloudfurr";
+import User from "components/Main/Content/User";
+import { Settings } from 'components/Main/Content/Settings';
+
+
 
 interface AppRouterInterface {
 }
@@ -14,16 +21,19 @@ export const AppRouter:FC<AppRouterInterface> = (props) => {
   return (
     <Switch>
       <Route path="/records">
-        <p>records</p>
-      </Route>
-      <Route path="/shop">
-        <p>store</p>
+        <AnimalRecords/>
       </Route>
       <Route path="/users">
-        <p>users</p>
+        <User/>
+      </Route>
+      <Route path="/shop">
+        <Cloudfurr/>
+      </Route>
+      <Route path="/settings">
+        <Settings/>
       </Route>
       <Route path="/">
-        <p>dashboard</p>
+        <h1>Home Page</h1>
       </Route>
     </Switch>
   )
